@@ -17,7 +17,11 @@
   },
   "homepage": "https://github.com/Mathilde-akerlind/slack-clone#readme",
   "dependencies": {
+    "async": "^3.2.0",
+    "ejs": "^3.1.6",
     "express": "^4.17.1",
+    "mongoose": "^5.12.0",
+    "path": "^0.12.7",
     "socket.io": "^4.0.0"
   }
 }
