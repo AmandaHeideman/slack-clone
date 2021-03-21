@@ -1,7 +1,5 @@
 //Det här är klientdelen
 
-
-
 const socket = io();
 
 let form = document.getElementById("form"); // 1 .när vi skickar in ett formulär så kommer det skapas ett event som heter submit.
