@@ -18,6 +18,9 @@ router.get('/register', (request, response) => {  //  get.  det här kommer ligg
 
 router.post('/login', (request, response, next) => {   //post, next kommer att inehålla vad som ska hända när routerhanteringen är klar
   // ett nytt steg, the next function, när inloggningsgrejen är klar
+
+  //autentisera login
+  //redirect till channels
 })
 
 router.post('/register', (request, response) => {  //post, det vi postar med formuläret när vi registrerar en användare

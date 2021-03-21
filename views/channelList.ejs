@@ -1,0 +1,17 @@
+<!-- Lista över existerande kanaler -->
+<h3>Kanaler</h3>
+<ul>
+  <% channels.forEach(channel => { %>
+    <a href="/channels/<%= channel %>">
+      <li><%= channel %></li>
+    </a>
+  <% }) %>
+</ul>
+
+<!-- Form för att skapa en ny kanal -->
+<h3>Skapa ny kanal</h3>
+<form action="/channels" method="post">
+  Namn:
+  <input name="newChannel" />
+  <input type="submit" value="Skapa" />
+</form>

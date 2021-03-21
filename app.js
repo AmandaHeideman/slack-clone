@@ -92,9 +92,9 @@ app.get('/chat', (request, response) => {
 io.on('connection', (socket) => {
   console.log('a user connected');
 
-  socket.on("chat message", message => {
-    console.log('recieved message: ' + message);  //här tar vi emot eventet och skriver ut det 
-    io.emit('chat message', message) //här skickar vi ut meddelandet? 
+  socket.on('chat message', data => { //tar emot message + vilken kanal från en klient
+    //console.log('Recieved message: ' + data.message + ' in ' + data.channel);
+    io.emit('chat message', data) //skickar ut till klienter
   })
 
   socket.on('disconnect', () => {
@@ -113,3 +113,4 @@ http.listen(3000, () => {
 
 app.use('/', require('./routes/index'))  //vilket route-objekt som den ska användas. vi skippar att lägga route i en varibel
 app.use('/users', require('./routes/users'))
+app.use('/channels', require('./routes/channels'))
