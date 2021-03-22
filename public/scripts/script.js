@@ -32,5 +32,6 @@ socket.on("chat message", (data) => {
     let newDate = now.slice(0, 21);
     item.textContent = user + message + " : " + newDate;
     messages.appendChild(item);
+
   }
 });

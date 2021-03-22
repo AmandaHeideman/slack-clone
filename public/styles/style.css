@@ -47,12 +47,8 @@ body {
 }
 
 #messages>li {
-  color: white;
+  color: #cb73e6;
   padding: 0.5rem 1rem;
-}
-
-#messages>li:nth-child(odd) {
-  background: #cb73e6;
 }
 
 html, body {
