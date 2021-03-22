@@ -13,7 +13,9 @@ form.addEventListener("submit", (e) => {
   //normalt när vi skicka så vill vi ju göra en post, men det vill vi inte här
   if (input.value) {
     //console.log('Sending message: ' + input.value + ' in channel ' + input.name);
-    let data = { message: input.value, channel: input.name };
+    let now = new Date().toString();
+    let newDate = now.slice(0, 21);
+    let data = { message: input.value, channel: input.name, name: "name", date_sent: newDate};
     socket.emit("chat message", data); //skickar med meddelande + vilken kanal till servern
   }
 
@@ -23,14 +25,13 @@ form.addEventListener("submit", (e) => {
 socket.on("chat message", (data) => {
   let message = data.message;
   let channel = data.channel;
-  let user = "user: ";
+  let name = data.name;
 
   if (checkChannel.textContent == channel) {
     //skriver bara ut message ifall vi är i rätt kanal
     let item = document.createElement("li");
-    let now = new Date().toString();
-    let newDate = now.slice(0, 21);
-    item.textContent = user + message + " : " + newDate;
+    
+    item.textContent = name + ": " + message;
     messages.appendChild(item);
 
   }

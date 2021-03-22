@@ -7,11 +7,16 @@ const MessageContentSchema = new Schema({
     required: true,
     maxlength: 200
   },
+  channel: {
+    type: String
+  },
   name: {
-    type: Schema.Types.ObjectId, ref: 'User', required: true
+    type: String,
+    /* Schema.Types.ObjectId,  */
+    ref: 'User', required: true
   },
   date_sent: {
-    type: date
+    type: String
   }
 })
 

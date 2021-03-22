@@ -79,11 +79,12 @@ app.get('/login', (request, response) => {
 
 
 // --------    chat
+const MessageModel = require('./models/message_content')
 
 app.get('/chat', (request, response) => {
   response.render('index.ejs')
 
-  const MessageModel = require('./models/message_content')
+  //const MessageModel = require('./models/message_content')
   const UserModel = require('./models/users')
 });
 
@@ -94,13 +95,26 @@ io.on('connection', (socket) => {
 
   socket.on('chat message', data => { //tar emot message + vilken kanal från en klient
     //console.log('Recieved message: ' + data.message + ' in ' + data.channel);
+    //nåt med databas
+
+    /* console.log(data);
+    const { chat_message, name, date_sent } = data  */
+
+    let chat_message = data.message;
+    let channel = data.channel; 
+    let name = data.name;
+    let date_sent = data.date_sent;
+
+    const newMessage = new MessageModel({ chat_message, channel, name, date_sent })
+    newMessage.save()
+    
     io.emit('chat message', data) //skickar ut till klienter
   })
+})
 
-  socket.on('disconnect', () => {
+  /* socket.on('disconnect', () => {
     console.log('a user disconnected');
-  })
-});
+  }) */
 
 http.listen(3000, () => {
   console.log('listening on :3000');
