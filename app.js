@@ -64,12 +64,12 @@ app.use('/public', express.static(path.join(__dirname, 'public')))  //för att a
 // --------    chat
 const MessageModel = require('./models/message_content')
 
-app.get('/chat', (request, response) => {
+/* app.get('/chat', (request, response) => {
   response.render('index.ejs')
 
-  //const MessageModel = require('./models/message_content')
+  const MessageModel = require('./models/message_content')
   const UserModel = require('./models/users')
-});
+}); */
 
 
 //----------------------------- Socket, chat
@@ -77,12 +77,6 @@ io.on('connection', (socket) => {
   console.log('a user connected');
 
   socket.on('chat message', data => { //tar emot message + vilken kanal från en klient
-    //console.log('Recieved message: ' + data.message + ' in ' + data.channel);
-    //nåt med databas
-
-    /* console.log(data);
-    const { chat_message, name, date_sent } = data  */
-
     let chat_message = data.message;
     let channel = data.channel;
     let name = data.name;

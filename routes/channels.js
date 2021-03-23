@@ -6,20 +6,29 @@ const router = express.Router();
 const { ensureAuthenticated } = require('../config/auth')
 
 let channels = ['Frontend 1', 'Frontend 2', 'Random']
+const ChannelModel = require('../models/channels')
 
 //Renderar befintliga kaneler på startsidan
 router.get('/', ensureAuthenticated, (req, res) => { //anropar funktionen varje gång vi försöker gå till channels, kollar om vi är inlogade
   const user = req.user
   const name = user.name
-  console.log(user.name);
+
+  
   res.render('channelList', { channels: channels, name: name }); //vi sparar name i en variabel och skickar med
 })
 
 //Lägger till nya kanaler som skapas
-router.post('/', (req, res) => {
-  let newChannel = req.body.newChannel;
-  channels.push(newChannel);
-  res.render('channelList', { channels: channels });
+router.post('/', ensureAuthenticated, (req, res) => {
+  let channel = req.body.newChannel;
+  channels.push(channel);
+
+  let channel_name = channel;
+  const newChannel = new ChannelModel({ channel_name })
+  newChannel.save()
+
+  const user = req.user
+  const name = user.name
+  res.render('channelList', { channels: channels, name: name });
 })
 
 
