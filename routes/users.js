@@ -3,6 +3,7 @@ const router = express.Router()
 
 const User = require('../models/users') //nu kan vi använda oss av vår Users-models, db, vi hämtar in den här för att kunna använda den överallt
 const bcrypt = require('bcrypt');
+const passport = require('passport')
 
 // login
 router.get('/login', (request, response) => {  //  get.   det här kommer ligga under /users
@@ -14,13 +15,18 @@ router.get('/register', (request, response) => {  //  get.  det här kommer ligg
   response.render('register')
 })
 
+router.get('/profile', (request, response) => {  //  get.  det här kommer ligga under /users
+  response.render('profile')
+})
+
 
 
 router.post('/login', (request, response, next) => {   //post, next kommer att inehålla vad som ska hända när routerhanteringen är klar
-  // ett nytt steg, the next function, när inloggningsgrejen är klar
-
-  //autentisera login
-  //redirect till channels
+  passport.authenticate('local', {
+    successRedirect: '/channels',//om vi lyckas logga in
+    failureRedirect: '/users/login',//om vi inte lyckas
+    failureFlash: true
+  })(request, response, next) //?? Micke sa acceptera att det är så 
 })
 
 router.post('/register', (request, response) => {  //post, det vi postar med formuläret när vi registrerar en användare
@@ -58,8 +64,10 @@ router.post('/register', (request, response) => {  //post, det vi postar med for
   //response.end()
 })
 //logout
-router.get('/logout', (request, response) => {  //  get.   
-
+router.get('/logout', (request, response) => {   //  för att göra oss av med användaren, logg ut 
+  request.logout()
+  request.flash('success_msg', 'You have logged out')
+  response.redirect('/users/login')
 })
 
 module.exports = router //det vi vill exportera är vårt routerobjekt, som vi har konfigurerat här. 

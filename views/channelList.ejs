@@ -2,9 +2,9 @@
 <h3>Kanaler</h3>
 <ul>
   <% channels.forEach(channel => { %>
-    <a href="/channels/<%= channel %>">
-      <li><%= channel %></li>
-    </a>
+  <a href="/channels/<%= channel %>">
+    <li><%= channel %></li>
+  </a>
   <% }) %>
 </ul>
 
@@ -15,3 +15,5 @@
   <input name="newChannel" />
   <input type="submit" value="Skapa" />
 </form>
+
+<p id="name"><%= name %></p>

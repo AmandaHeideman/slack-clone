@@ -19,11 +19,15 @@
         <div class="container-fluid">
           <a class="navbar-brand" href="/">Home</a>
           <a class="navbar-brand" href="/channels">Channels</a>
+          <a class="navbar-brand" href="/users/profile">Profile Page</a>
         </div>
       </nav>
     </header>
     <div class="wrapper">
-      <main class="form-signin"><%-body %></main>
+      <main class="form-signin">
+        <%-body %>
+        <!--  <a href="/users/logout"> Log out</a> -->
+      </main>
       <!--  vi kommer att kunna göra bara body delarna i våra views-filer, och så kommer ett middleware att göra så att dom parsas in i den här filen -->
       <!--  Den här sidan tar hand om allt som inte är body, antar att det är css osv   -->
     </div>

@@ -11,8 +11,11 @@ const router = express.Router()
 const expressEjsLayout = require('express-ejs-layouts') // används till våra vyer/views
 const flash = require('connect-flash')
 const session = require('express-session')
+
 //const path = require('path')
 const passport = require('passport')
+require('./config/passport')(passport)  //hämtar funktionen passport från passport.js för att den ska köra sina grejer här. 
+
 
 //-----------------mongoose, db
 
@@ -37,7 +40,7 @@ app.use(session({   //flash är beroende av den här sessionen för att fungera
 
 //passport 
 app.use(passport.initialize())
-app.use(passport.session())
+app.use(passport.session())  //gör att vi kan spara vår userData i en session. session används både av passport och flash
 
 //flash
 app.use(flash())
@@ -56,26 +59,6 @@ const io = require('socket.io')(http);
 const path = require('path')
 
 app.use('/public', express.static(path.join(__dirname, 'public')))  //för att använda oss av static routing, för att få våra statiska filer att läsas in från rätt ställe
-
-
-
-/* //passport/login
-
-app.get('/', (request, response) => {
-  response.render('welcome.ejs')
-})
-
-
-//register 
-app.get('/register', (request, response) => {
-  response.render('register.ejs')
-})
-
-//log in
-app.get('/login', (request, response) => {
-  response.render('login.ejs')
-})
- */
 
 
 // --------    chat
@@ -101,20 +84,20 @@ io.on('connection', (socket) => {
     const { chat_message, name, date_sent } = data  */
 
     let chat_message = data.message;
-    let channel = data.channel; 
+    let channel = data.channel;
     let name = data.name;
     let date_sent = data.date_sent;
 
     const newMessage = new MessageModel({ chat_message, channel, name, date_sent })
     newMessage.save()
-    
+
     io.emit('chat message', data) //skickar ut till klienter
   })
 })
 
-  /* socket.on('disconnect', () => {
-    console.log('a user disconnected');
-  }) */
+/* socket.on('disconnect', () => {
+  console.log('a user disconnected');
+}) */
 
 http.listen(3000, () => {
   console.log('listening on :3000');
