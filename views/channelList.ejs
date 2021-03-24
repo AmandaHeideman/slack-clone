@@ -1,9 +1,10 @@
 <!-- Lista över existerande kanaler -->
 <h3>Kanaler</h3>
 <ul>
-  <% channels.forEach(channel => { %>
-  <a href="/channels/<%= channel %>">
-    <li><%= channel %></li>
+  <% channels.forEach(channel => { %> 
+    <!-- Eftersom vi får en array med objekt från databasen, loopar vi igenom arrayen och skriver ut channel_name från varje objekt -->
+  <a href="/channels/<%= channel.channel_name %>">
+    <li><%= channel.channel_name %></li>
   </a>
   <% }) %>
 </ul>
