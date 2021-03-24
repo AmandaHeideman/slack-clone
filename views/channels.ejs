@@ -1,6 +1,10 @@
 <h1 id="channel"><%= channel %></h1>
 
-<ul id="messages"></ul>
+<ul id="messages">
+  <% messages.forEach(message => { %> 
+    <li><%= message.name %>: <%= message.chat_message %></li>
+  <% }) %>
+</ul>
 
 <form id="form">
   <input id="input" autocomplete="off" name="<%= channel %>" />
