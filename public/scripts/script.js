@@ -33,7 +33,7 @@ socket.on("chat message", (data) => {
   let channel = data.channel;
   let name = data.name;
 
-  if (checkChannel.textContent == channel) {
+  if (checkChannel.textContent == channel) { //kolla att vi är i rätt kanal 
     //skriver bara ut message ifall vi är i rätt kanal
     let item = document.createElement("li");
 

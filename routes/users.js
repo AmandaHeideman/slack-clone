@@ -5,6 +5,11 @@ const User = require('../models/users') //nu kan vi använda oss av vår Users-m
 const bcrypt = require('bcrypt');
 const passport = require('passport')
 
+const fileupload = require('express-fileupload')
+const path = require('path')
+
+
+
 // login
 router.get('/login', (request, response) => {  //  get.   det här kommer ligga under /users
   response.render('login')
@@ -15,12 +20,33 @@ router.get('/register', (request, response) => {  //  get.  det här kommer ligg
   response.render('register')
 })
 
+
+//profile page
 router.get('/profile', (request, response) => {  //  get.  det här kommer ligga under /users
   response.render('profile')
 })
 
+router.post('/upload-profile-pic', (request, response) => {
+  try {
+    if (request.files) { //om det finns fil. files kommer innehålla hela formuläret
+      let profile_pic = request.files.profile_pic  //innehåller den uppladdade filen. kommer hamna i temporär fil-area om man inte lägger den någonstans
+
+      let file_name = `./uploads/${profile_pic.name}` //vi kan döpa om den här om vi vill 
+      profile_pic.mv(file_name) //vart den ska hamna
+
+      response.render('image', { image: file_name }) //i vår image-template kommer vi ha tillgång till ett objekt med egenskapen image som innehåller filnamnet på den filen vi laddat upp 
+
+    } else {
+      response.end('<h1>No file uploaded!</h1>')
+    }
+  } catch (error) {
+    response.send()
+
+  }
+})
 
 
+//user-login / register
 router.post('/login', (request, response, next) => {   //post, next kommer att inehålla vad som ska hända när routerhanteringen är klar
   passport.authenticate('local', {
     successRedirect: '/channels',//om vi lyckas logga in

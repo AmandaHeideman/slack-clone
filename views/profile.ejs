@@ -1,2 +1,11 @@
 <h1>här är profilsida</h1>
 <a href="/users/logout"> Log out</a>
+
+<form
+  action="/users/upload-profile-pic"
+  method="post"
+  enctype="multipart/form-data"
+>
+  <input type="file" name="profile_pic" />
+  <input type="submit" value="Save" />
+</form>

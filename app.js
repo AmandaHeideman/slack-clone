@@ -52,13 +52,19 @@ app.use((request, response, next) => {  //vi vill lägga till våra meddelanden 
 })
 
 //bodyparse för att ta emot post-data. om vi har express så kan vi använda oss av express.urlencoded ist för bodyparser
-app.use(express.urlencoded({ extended: false }))
+app.use(express.urlencoded({ extended: true }))
 
 
 const io = require('socket.io')(http);
 const path = require('path')
 
+const fileupload = require('express-fileupload')
 app.use('/public', express.static(path.join(__dirname, 'public')))  //för att använda oss av static routing, för att få våra statiska filer att läsas in från rätt ställe
+
+app.use(fileupload({  //för att skapa mappen där filuppladdning ska hamna
+  createParentPath: true
+}))
+
 
 
 // --------    chat
@@ -89,9 +95,7 @@ io.on('connection', (socket) => {
   })
 })
 
-/* socket.on('disconnect', () => {
-  console.log('a user disconnected');
-}) */
+
 
 http.listen(3000, () => {
   console.log('listening on :3000');

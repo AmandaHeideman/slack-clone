@@ -8,10 +8,10 @@ router.get('/', (request, response) => {
   response.render('welcome')
 })
 
-//register page
+/* //register page
 router.get('/register', (request, response) => {
   response.render('register')
-})
+}) */
 
 module.exports = router //det vi vill exportera är vårt routerobjekt, som vi har konfigurerat här. 
 
