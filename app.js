@@ -65,6 +65,7 @@ app.use(fileupload({  //för att skapa mappen där filuppladdning ska hamna
   createParentPath: true
 }))
 
+app.use('/users/uploads', express.static(path.join(__dirname, 'uploads')))
 
 
 // --------    chat

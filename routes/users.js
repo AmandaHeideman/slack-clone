@@ -21,6 +21,8 @@ router.get('/register', (request, response) => {  //  get.  det här kommer ligg
 })
 
 
+
+
 //profile page
 router.get('/profile', (request, response) => {  //  get.  det här kommer ligga under /users
   response.render('profile')
