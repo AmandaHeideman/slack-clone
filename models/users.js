@@ -13,6 +13,10 @@ const UserSchema = new mongoose.Schema({   //vi sätter upp ett schema
   password: {
     type: String,
     required: true
+  },
+
+  profile_pic: {
+    type: String
   }
 
 })

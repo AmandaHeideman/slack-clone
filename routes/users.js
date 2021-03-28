@@ -25,13 +25,15 @@ router.get('/register', (request, response) => {  //  get.  det här kommer ligg
 
 
 //profile page
-router.get('/profile', ensureAuthenticated, (request, response) => {  //  get.  det här kommer ligga under /users
+router.get('/profile', ensureAuthenticated, async(request, response) => {  //  get.  det här kommer ligga under /users
   const user = request.user
   const name = user.name
 
-  //hämta profilbild från databas
-  
-  response.render('profile', {name: name})
+  //hämtar profilbild från databas
+  const profile_from_db = await User.find({name: name});
+  let profile_pic = profile_from_db[0].profile_pic;
+
+  response.render('profile', {name: name, image: profile_pic})
 })
 
 router.post('/profile', ensureAuthenticated, (request, response) => {
@@ -44,7 +46,9 @@ router.post('/profile', ensureAuthenticated, (request, response) => {
       let file_name = `./uploads/${profile_pic.name}` //vi kan döpa om den här om vi vill 
       profile_pic.mv(file_name) //vart den ska hamna
 
-      //Uppdatera databas users med länk till bild, så vi kan rendera ut sparad bild direkt
+      //Uppdaterar databas users med länk till bild
+      user.profile_pic = file_name;
+      user.save();
 
       response.render('profile', { image: file_name, name: name }) //i vår image-template kommer vi ha tillgång till ett objekt med egenskapen image som innehåller filnamnet på den filen vi laddat upp 
 
