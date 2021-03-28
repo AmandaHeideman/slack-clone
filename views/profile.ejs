@@ -1,11 +1,15 @@
-<h1>här är profilsida</h1>
-<a href="/users/logout"> Log out</a>
+<% if(typeof image == 'undefined') { image = ''} %>
+<h1><%= name %>'s profil</h1>
 
+<img src="<%= image %>" height="200px">
 <form
-  action="/users/upload-profile-pic"
-  method="post"
-  enctype="multipart/form-data"
+action="/users/profile"
+method="post"
+enctype="multipart/form-data"
 >
-  <input type="file" name="profile_pic" />
-  <input type="submit" value="Save" />
+Ladda upp ny profilbild
+<input type="file" name="profile_pic" />
+<input type="submit" value="Save" />
+<br>
+<a href="/users/logout"> Log out</a>
 </form>

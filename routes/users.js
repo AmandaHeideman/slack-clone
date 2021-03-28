@@ -4,6 +4,7 @@ const router = express.Router()
 const User = require('../models/users') //nu kan vi använda oss av vår Users-models, db, vi hämtar in den här för att kunna använda den överallt
 const bcrypt = require('bcrypt');
 const passport = require('passport')
+const { ensureAuthenticated } = require('../config/auth')
 
 const fileupload = require('express-fileupload')
 const path = require('path')
@@ -24,11 +25,18 @@ router.get('/register', (request, response) => {  //  get.  det här kommer ligg
 
 
 //profile page
-router.get('/profile', (request, response) => {  //  get.  det här kommer ligga under /users
-  response.render('profile')
+router.get('/profile', ensureAuthenticated, (request, response) => {  //  get.  det här kommer ligga under /users
+  const user = request.user
+  const name = user.name
+
+  //hämta profilbild från databas
+  
+  response.render('profile', {name: name})
 })
 
-router.post('/upload-profile-pic', (request, response) => {
+router.post('/profile', ensureAuthenticated, (request, response) => {
+  const user = request.user
+  const name = user.name
   try {
     if (request.files) { //om det finns fil. files kommer innehålla hela formuläret
       let profile_pic = request.files.profile_pic  //innehåller den uppladdade filen. kommer hamna i temporär fil-area om man inte lägger den någonstans
@@ -36,7 +44,9 @@ router.post('/upload-profile-pic', (request, response) => {
       let file_name = `./uploads/${profile_pic.name}` //vi kan döpa om den här om vi vill 
       profile_pic.mv(file_name) //vart den ska hamna
 
-      response.render('image', { image: file_name }) //i vår image-template kommer vi ha tillgång till ett objekt med egenskapen image som innehåller filnamnet på den filen vi laddat upp 
+      //Uppdatera databas users med länk till bild, så vi kan rendera ut sparad bild direkt
+
+      response.render('profile', { image: file_name, name: name }) //i vår image-template kommer vi ha tillgång till ett objekt med egenskapen image som innehåller filnamnet på den filen vi laddat upp 
 
     } else {
       response.end('<h1>No file uploaded!</h1>')
