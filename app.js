@@ -5,14 +5,11 @@ const express = require('express')
 const app = express();
 const http = require('http').createServer(app);
 
-
-
 const router = express.Router()
 const expressEjsLayout = require('express-ejs-layouts') // används till våra vyer/views
 const flash = require('connect-flash')
 const session = require('express-session')
 
-//const path = require('path')
 const passport = require('passport')
 require('./config/passport')(passport)  //hämtar funktionen passport från passport.js för att den ska köra sina grejer här. 
 
@@ -71,14 +68,6 @@ app.use('/users/uploads', express.static(path.join(__dirname, 'uploads')))
 // --------    chat
 const MessageModel = require('./models/message_content')
 
-/* app.get('/chat', (request, response) => {
-  response.render('index.ejs')
-
-  const MessageModel = require('./models/message_content')
-  const UserModel = require('./models/users')
-}); */
-
-
 //----------------------------- Socket, chat
 io.on('connection', (socket) => {
   console.log('a user connected');
@@ -96,14 +85,9 @@ io.on('connection', (socket) => {
   })
 })
 
-
-
 http.listen(3000, () => {
   console.log('listening on :3000');
 });
-
-//-------------------------------------------- passport/login stuff
-
 
 //ROUTES!!
 

@@ -9,8 +9,6 @@ const { ensureAuthenticated } = require('../config/auth')
 const fileupload = require('express-fileupload')
 const path = require('path')
 
-
-
 // login
 router.get('/login', (request, response) => {  //  get.   det här kommer ligga under /users
   response.render('login')
@@ -20,9 +18,6 @@ router.get('/login', (request, response) => {  //  get.   det här kommer ligga 
 router.get('/register', (request, response) => {  //  get.  det här kommer ligga under /users
   response.render('register')
 })
-
-
-
 
 //profile page
 router.get('/profile', ensureAuthenticated, async(request, response) => {  //  get.  det här kommer ligga under /users
@@ -103,8 +98,8 @@ router.post('/register', (request, response) => {  //post, det vi postar med for
         .catch(error => console.log(error))  //om det inte går bra, skicka error
     })
   }
-  //response.end()
 })
+
 //logout
 router.get('/logout', (request, response) => {   //  för att göra oss av med användaren, logg ut 
   request.logout()
